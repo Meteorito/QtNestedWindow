@@ -1,4 +1,4 @@
-#include "nestedwindow.h"
+﻿#include "nestedwindow.h"
 #include <sstream>
 #include <QDebug>
 
@@ -7,7 +7,7 @@ NestedWindow::NestedWindow(QObject* parent)
   Q_UNUSED(parent)
   pTimer = new QTimer(this);
   QObject::connect(pTimer,&QTimer::timeout,this,&NestedWindow::timerOutCheck);
-  pTimer->start(10);
+
 
 }
 /**
@@ -43,6 +43,7 @@ void NestedWindow::setWindowPos(int x, int y, int width, int height)
 void NestedWindow::closeNestedWindow(){
   if(other_win){
       SendMessageA(other_win,WM_CLOSE,0,0);
+      setLoad(false);
     }
 }
 /**
@@ -62,6 +63,7 @@ void NestedWindow::timerOutCheck()
   other_win = FindWindow(m_otherWinClassName.toStdWString().data(),m_otherWinTitleName.toStdWString().data());
   qt_win = FindWindow(L"Qt5QWindowOwnDCIcon", m_qtWindowTitle.toStdWString().data());
   if(other_win && qt_win){
+      qDebug()<<"find window";
       pTimer->stop();
       SetWindowLong(other_win, GWL_STYLE,GetWindowLong(other_win, GWL_EXSTYLE) | WS_EX_TOPMOST);
       SetWindowPos(other_win,HWND_TOPMOST  ,m_x,m_y,m_width,m_heigth,SWP_SHOWWINDOW);
@@ -161,4 +163,22 @@ void NestedWindow::setQtWindowTitle(const QString &newQtWindowTitle)
     return;
   m_qtWindowTitle = newQtWindowTitle;
   emit qtWindowTitleChanged();
+}
+
+bool NestedWindow::load() const
+{
+  return m_load;
+}
+
+void NestedWindow::setLoad(bool newLoad)
+{
+  if (m_load == newLoad)
+    return;
+  m_load = newLoad;
+  if(m_load == true){
+        pTimer->start(10);
+    }else {
+      pTimer->stop();
+}
+  emit loadChanged();
 }

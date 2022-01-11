@@ -15,14 +15,9 @@ int main(int argc, char *argv[])
 
   QGuiApplication app(argc, argv);
 
-//  NestedWindow nested_win;
-
   QQmlApplicationEngine engine;
 
  qmlRegisterType<NestedWindow>("NestedWindow.com",1,0,"NestedWindow");
-
-//  QQmlContext* context = engine.rootContext();
-//  context->setContextProperty("nestedWindow",&nested_win);
 
   const QUrl url(QStringLiteral("qrc:/main.qml"));
   QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
@@ -32,29 +27,6 @@ int main(int argc, char *argv[])
   }, Qt::QueuedConnection);
 
   engine.load(url);
-
-//  WId wid = 0;
-//  QWindow *window =nullptr;
-//  QObject* root_object =  engine.rootObjects().first();
-//  if(root_object){
-//      if(root_object->objectName() == "btn"){
-//         window = qobject_cast<QWindow *>(root_object);
-//         if(window){
-//             wid = window->winId();
-//           }
-//        }else{
-
-//              window =  root_object->findChild< QWindow*>("btn",Qt::FindChildrenRecursively);
-//             if(window){
-//                 wid = window->winId();
-//               }
-
-//        }
-//    }
-
-//  qDebug()<<"winId:"<<wid;
-//  HWND hWnd = reinterpret_cast<HWND>(wid);
-//  qDebug()<<"hWnd:"<<hWnd;
 
   return app.exec();
 }

@@ -1,4 +1,4 @@
-import QtQuick 2.12
+﻿import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
 import QtQml 2.12
@@ -16,8 +16,11 @@ Window {
     Button{
         property int count: 0
         objectName: "btn"
+        text: "load"
         onClicked: {
+             nestedWindow.load = true
         }
+
     }
     NestedWindow{
         id:nestedWindow
@@ -28,6 +31,17 @@ Window {
         width: window.width/2
         heigth: window.height /2
         qtWindowTitle: window.title
+
+    }
+
+    Button {
+        id: button
+        x: 106
+        y: 0
+        text: qsTr("close")
+        onClicked: {
+            nestedWindow.closeNestedWindow()
+        }
     }
 
 

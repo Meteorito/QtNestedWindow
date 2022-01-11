@@ -18,6 +18,7 @@ public:
   Q_PROPERTY(int y READ y WRITE setY NOTIFY yChanged)
   Q_PROPERTY(int width READ width WRITE setWidth NOTIFY widthChanged)
   Q_PROPERTY(int heigth READ heigth WRITE setHeigth NOTIFY heigthChanged)
+  Q_PROPERTY(bool load READ load WRITE setLoad NOTIFY loadChanged)
 
   //Regist the window params of other program windows ,including window Class Name
   //and window Title Name.We can use these in qml program.
@@ -53,6 +54,9 @@ Q_INVOKABLE   void closeNestedWindow();
   const QString &qtWindowTitle() const;
   void setQtWindowTitle(const QString &newQtWindowTitle);
 
+  bool load() const;
+  void setLoad(bool newLoad);
+
 signals:
   void xChanged();
 
@@ -67,6 +71,8 @@ signals:
   void otherWinTitleNameChanged();
 
   void qtWindowTitleChanged();
+
+  void loadChanged();
 
 private slots:
   void timerOutCheck();
@@ -85,6 +91,7 @@ private:
   QString m_otherWinClassName;
   QString m_otherWinTitleName;
   QString m_qtWindowTitle;
+  bool m_load = false;
 };
 
 #endif // NESTEDWINDOW_H
