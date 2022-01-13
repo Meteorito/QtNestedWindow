@@ -43,7 +43,6 @@ void NestedWindow::setWindowPos(int x, int y, int width, int height)
 void NestedWindow::closeNestedWindow(){
   if(other_win){
       SendMessageA(other_win,WM_CLOSE,0,0);
-      setLoad(false);
     }
 }
 /**
